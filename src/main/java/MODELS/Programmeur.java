@@ -1,3 +1,5 @@
+package MODELS;
+
 public class Programmeur {
     private String nom;
     private String prenom;
@@ -10,6 +12,7 @@ public class Programmeur {
     private String responsable ;
     private String hobby;
 
+    public Programmeur(){};
     public Programmeur(Integer id,String nom, String prenom, String anNaissance, double salaire, double prime, String pseudo,String adresse,String responsable,String hobby) {
         this.id = id;
         this.nom = nom;
@@ -25,7 +28,7 @@ public class Programmeur {
 
     @Override
     public String toString() {
-        return "Programmeur{" +
+        return "MODELS.Programmeur{" +
                 "nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", anNaissance='" + anNaissance + '\'' +
