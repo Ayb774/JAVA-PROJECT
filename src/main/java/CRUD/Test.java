@@ -20,7 +20,7 @@ public class Test {
 
             ArrayList<Programmeur> allProgrammeurs = ProgrammeurDAO.getAllUsers();
             System.out.println(allProgrammeurs);
-            ProgrammeurDAO.updateSalaire(9555,2);
+            ProgrammeurDAO.updateSalaire(9,2);
 
         }
         catch (Exception e){
