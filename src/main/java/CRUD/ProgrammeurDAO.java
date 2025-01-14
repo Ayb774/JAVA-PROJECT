@@ -16,51 +16,49 @@ public class ProgrammeurDAO {
 
 
     public static void insertUser(Programmeur programmeur) throws SQLException {
-        try (Connection conn = DbConfig.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conn = DbConfig.getConnection()) {
+            String insertQuery = "INSERT INTO programmeur (nom, prenom, adresse, responsable, hobby, anNaissance, salaire, prime, pseudo) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement stmt = conn.prepareStatement(insertQuery)) {
+                stmt.setString(1, programmeur.getNom());
+                stmt.setString(2, programmeur.getPrenom());
+                stmt.setString(3, programmeur.getAdresse());
+                stmt.setString(4, programmeur.getResponsable());
+                stmt.setString(5, programmeur.getHobby());
+                stmt.setString(6, programmeur.getAnNaissance());
+                stmt.setDouble(7, programmeur.getSalaire());
+                stmt.setDouble(8, programmeur.getPrime());
+                stmt.setString(9, programmeur.getPseudo());
 
-            stmt.setString(1, programmeur.getNom());
-            stmt.setString(2, programmeur.getPrenom());
-            stmt.setString(3, programmeur.getAdresse());
-            stmt.setString(4, programmeur.getResponsable());
-            stmt.setString(5, programmeur.getHobby());
-            stmt.setString(6, programmeur.getAnNaissance());
-            stmt.setDouble(7, programmeur.getSalaire());
-            stmt.setDouble(8, programmeur.getPrime());
-            stmt.setString(9, programmeur.getPseudo());
-
-            int affectedRows = stmt.executeUpdate();
-            if (affectedRows == 0) {
-                throw new SQLException("La création de l'utilisateur a échoué");
+                int affectedRows = stmt.executeUpdate();
+                if (affectedRows == 0) {
+                    throw new SQLException("La création de l'utilisateur a échoué");
+                }
             }
 
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    programmeur.setId(generatedKeys.getInt(1));
+            try (Statement stmt = conn.createStatement();
+                 ResultSet rs = stmt.executeQuery("SELECT last_insert_rowid()")) {
+                if (rs.next()) {
+                    programmeur.setId(rs.getInt(1));
                 }
             }
         }
     }
+
 
     public static void deleteUser(int id) throws SQLException {
-
-
-        try (Connection conn = DbConfig.getConnection();) {
-
-            PreparedStatement stmt = conn.prepareStatement(DELETE);
-            stmt.setInt(1, id);
-            int affectedRows = stmt.executeUpdate();
-            if (affectedRows == 0) {
-                throw new SQLException("L'utilisateur n'existe pas");
-
-            }
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    id = generatedKeys.getInt(1);
+        try (Connection conn = DbConfig.getConnection()) {
+            String deleteQuery = "DELETE FROM programmeur WHERE id = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(deleteQuery)) {
+                stmt.setInt(1, id);
+                int affectedRows = stmt.executeUpdate();
+                if (affectedRows == 0) {
+                    throw new SQLException("Le programmeur avec l'ID " + id + " n'existe pas.");
                 }
             }
         }
     }
+
 
     public static Programmeur getUserById(int id) throws SQLException {
 
@@ -120,6 +118,30 @@ public class ProgrammeurDAO {
 
         }
     }
+    public static void updateUser(Programmeur programmeur) throws SQLException {
+        String updateQuery = "UPDATE programmeur SET nom = ?, prenom = ?, adresse = ?, responsable = ?, hobby = ?, anNaissance = ?, salaire = ?, prime = ?, pseudo = ? WHERE id = ?";
+
+        try (Connection conn = DbConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(updateQuery)) {
+
+            stmt.setString(1, programmeur.getNom());
+            stmt.setString(2, programmeur.getPrenom());
+            stmt.setString(3, programmeur.getAdresse());
+            stmt.setString(4, programmeur.getResponsable());
+            stmt.setString(5, programmeur.getHobby());
+            stmt.setString(6, programmeur.getAnNaissance());
+            stmt.setDouble(7, programmeur.getSalaire());
+            stmt.setDouble(8, programmeur.getPrime());
+            stmt.setString(9, programmeur.getPseudo());
+            stmt.setInt(10, programmeur.getId());
+
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("La mise à jour a échoué, aucun programmeur trouvé avec l'ID : " + programmeur.getId());
+            }
+        }
+    }
+
 
     public static void updateSalaire(double newSalaire,int id) throws SQLException {
 

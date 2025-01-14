@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détails du Programmeur</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="navbar">
+    <h1 class="logo">DevManager</h1>
+    <nav class="nav-links">
+      <button class="menu-button" onclick="window.location.href='index.html'">Dashboard</button>
+      <button class="menu-button" onclick="window.location.href='rapport_statistiques.html'">Rapports et Statistiques</button>
+      <button class="menu-button" onclick="window.location.href='ajouter_programmeur.html'">Ajouter Programmeur</button>
+    </nav>
+  </div>
+
+  <main>
+    <section id="programmer-detail">
+      <h2>Informations du Programmeur</h2>
+      <div id="notification" class="hidden"></div>
+      <div class="card">
+        <span id="detail-id" style="display: none;"></span>
+        <p><strong>Nom :</strong> <input type="text" id="detail-name" class="editable" readonly></p>
+        <p><strong>Prénom :</strong> <input type="text" id="detail-firstname" class="editable" readonly></p>
+        <p><strong>Adresse :</strong> <input type="text" id="detail-address" class="editable" readonly></p>
+        <p><strong>Pseudo :</strong> <input type="text" id="detail-pseudo" class="editable" readonly></p>
+        <p><strong>Responsable :</strong> <input type="text" id="detail-manager" class="editable" readonly></p>
+        <p><strong>Hobby :</strong> <input type="text" id="detail-hobby" class="editable" readonly></p>
+        <p><strong>Naissance :</strong> <input type="number" id="detail-birth" class="editable" readonly></p>
+        <p><strong>Salaire :</strong> <input type="number" id="detail-salary" class="editable" readonly></p>
+        <p><strong>Prime :</strong> <input type="number" id="detail-bonus" class="editable" readonly></p>
+
+        <button id="delete-programmer" onclick="supprimerProgrammeur()">Supprimer ce programmeur</button>
+        <button id="save-changes" onclick="enregistrerModifications()">Enregistrer les modifications</button>
+      </div>
+
+    </section>
+  </main>
+
+<script src="scripts.js"></script>
+<script>
+  window.onload = afficherDetailsProgrammeur;
+</script>
+</body>
+</html>

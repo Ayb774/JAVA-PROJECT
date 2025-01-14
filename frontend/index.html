@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Programmeurs</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="navbar">
+    <h1 class="logo">DevManager</h1>
+    <nav class="nav-links">
+        <button class="menu-button" onclick="window.location.href='index.html'">Dashboard</button>
+        <button class="menu-button" onclick="window.location.href='rapport_statistiques.html'">Rapports et Statistiques</button>
+        <button class="menu-button" onclick="window.location.href='ajouter_programmeur.html'">Ajouter Programmeur</button>
+    </nav>
+</div>
+<div class="search-container">
+    <input
+            type="text"
+            id="search-bar"
+            placeholder="Rechercher un programmeur..."
+            onkeyup="filterProgrammers()"
+    />
+</div>
+
+<main>
+    <section class="dashboard">
+
+
+        <div id="key-metrics" class="key-metrics">
+            <p><strong>Nombre total de programmeurs : </strong><span id="total-programmers">0</span></p>
+            <p><strong>Salaire moyen : </strong><span id="average-salary">0</span> €</p>
+            <p><strong>Total des primes : </strong><span id="total-bonus">0</span> €</p>
+        </div>
+
+        <h2>Liste des Programmeurs</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Année de Naissance</th>
+                <th>Salaire</th>
+            </tr>
+            </thead>
+            <tbody id="programmers-list">
+            </tbody>
+        </table>
+    </section>
+
+</main>
+<script src="scripts.js"></script>
+<script>
+
+
+    window.onload = function() {
+        fetchProgrammeurs();
+        updateKeyMetrics();
+    };
+</script>
+</body>
+</html>
